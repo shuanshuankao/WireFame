@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線框1_首頁</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 引用公版 style.css -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        /* 內容最上方官網宣傳圖或產品圖 - 區塊大小 */
+        .block.position-relative {
+            max-width: 2500px;
+            margin: 50px auto;
+            padding: 0;
+        }
+
+        /* 內容最上方官網宣傳圖或產品圖 - 圖片高度 */
+        .carousel img {
+            height: 2500px;
+            /* 可調整輪播圖高度 */
+            object-fit: cover;
+            /* 保持圖片比例 */
+        }
+
+        /* 內容最上方官網宣傳圖或產品圖 - 文字置中底部 */
+        .overlay-text {
+            position: absolute;
+            /* 距離底部距離 */
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.4);
+            /* 半透明背景，增加對比 */
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+
+
+        /* 最新消息區塊 */
+        .news-section {
+            max-width: 2550px;
+            margin: 50px auto;
+        }
+
+        /* 標題樣式 */
+        .news-title {
+            text-align: center;
+            /* 字變大 */
+            font-size: 32px;
+            font-weight: bold;
+            /* 外框 */
+            border: 2px solid black;
+            padding: 10px 30px;
+            display: block;
+            width: fit-content;
+            margin: 0 auto 20px;
+        }
+
+        /* 最新消息列表容器 */
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            /* 由上到下排列 */
+            max-width: 900px;
+            margin: 0 auto;
+            border: 2px solid black;
+            /* 整個列表外框 */
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        /* 單筆消息 */
+        .news-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 20px;
+            /* 文字變大 */
+            text-decoration: none;
+            color: black;
+            transition: background 0.2s;
+            border-bottom: 1px solid black;
+            /* 列間隔線 */
+        }
+
+        /* 最後一列不要下邊框 */
+        .news-row:last-child {
+            border-bottom: none;
+        }
+
+        /* 滑鼠 hover 或點擊反藍 */
+        .news-row:hover,
+        .news-row:active {
+            background-color: #cce5ff;
+        }
+
+        /* 日期 / 品牌 / 標題欄位 */
+        .news-date,
+        .news-brand,
+        .news-title-text {
+            flex: 1;
+            padding: 0 10px;
+            text-align: center;
+            border-right: 1px solid black;
+        }
+
+        /* 最右欄不要右邊框 */
+        .news-title-text {
+            border-right: none;
+            flex: 3;
+            text-align: left;
+            font-weight: bold;
+        }
+
+
+
+        /* 相關連結區塊 */
+        /* 標題設定 */
+        .section-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: -20px;
+            /* 拉近下面區塊 */
+        }
+
+        /* 相關連結區左右箭頭 */
+        /* 讓卡片那排有高度（不然會擠在一起） */
+        .link-row {
+            height: 200px;
+            align-items: center;
+        }
+
+        /* 每個圖片框 */
+        .link-card {
+            width: 200px;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 10px;
+            display: block;
+            border: 2px solid black;
+            /* （黑色框） */
+        }
+
+        /* 圖片 */
+        .link-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        /* 圖片距離 */
+        .link-row {
+            height: 200px;
+            align-items: center;
+            gap: 100px;
+            /* 🔥 自訂間距 */
+        }
+
+        /* hover 放大效果 */
+        .link-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* 左右箭頭 */
+        #linkCarousel .carousel-control-prev-icon,
+        #linkCarousel .carousel-control-next-icon {
+            background-color: black;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            background-size: 100%, 100%;
+            background-image: none;
+            position: relative;
+        }
+
+        /* 左箭頭 */
+        #linkCarousel .carousel-control-prev-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid white;
+            border-left: 2px solid white;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        /* 右箭頭 */
+        #linkCarousel .carousel-control-next-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid white;
+            border-left: 2px solid white;
+            transform: translate(-50%, -50%) rotate(135deg);
+        }
+    </style>
+
+</head>
+
+
+<body>
+    <!-- 引用 header -->
+    <div id="header-placeholder"></div>
+
+    <!-- 內容區（wireframe） -->
+    <div class="block position-relative">
+        <!-- Bootstrap Carousel -->
+        <div id="promoCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="images/promo1.jpg" class="d-block w-100" alt="宣傳圖1">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/promo2.jpg" class="d-block w-100" alt="宣傳圖2">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/promo3.jpg" class="d-block w-100" alt="宣傳圖3">
+                </div>
+            </div>
+
+            <!-- 左右箭頭 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">上一張</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">下一張</span>
+            </button>
+
+            <!-- 圓點指示 -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="2"></button>
+            </div>
+        </div>
+
+        <!-- 正中下方文字 -->
+        <div class="overlay-text">官網宣傳圖或產品圖(此標有圖後可刪除)</div>
+    </div>
+
+    <!-- 最新消息區塊 -->
+    <div class="news-section">
+        <div class="news-title">最新消息</div>
+        <div class="news-list">
+            <div class="news-row">
+                <span class="news-date">發佈日期</span>
+                <span class="news-brand">品牌主題</span>
+                <span class="news-title-text">標題</span>
+            </div>
+
+            <div class="news-row">
+                <span class="news-date">2026-03-30</span>
+                <span class="news-brand">🎼 音樂</span>
+                <span class="news-title-text"> XXXXXXXXXX </span>
+            </div>
+
+            <div class="news-row">
+                <span class="news-date">2026-03-29</span>
+                <span class="news-brand">🍪 手工餅乾</span>
+                <span class="news-title-text"> XXXXXXXXXX </span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 相關連結區塊 -->
+    <div class="block">
+        <div class="section-title">相關連結</div>
+
+        <div id="linkCarousel" class="carousel slide">
+
+            <div class="carousel-inner">
+
+                <!-- 第一頁 -->
+                <div class="carousel-item active">
+                    <div class="d-flex justify-content-center link-row">
+
+                        <a href="#" class="link-card">
+                            <img src="images/link1.jpg">
+                        </a>
+
+                        <a href="#" class="link-card">
+                            <img src="images/link2.jpg">
+                        </a>
+
+                        <a href="#" class="link-card">
+                            <img src="images/link3.jpg">
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- 第二頁 -->
+                <div class="carousel-item">
+                    <div class="d-flex justify-content-center link-row">
+
+                        <a href="#" class="link-card">
+                            <img src="images/link4.jpg">
+                        </a>
+
+                        <a href="#" class="link-card">
+                            <img src="images/link5.jpg">
+                        </a>
+
+                        <a href="#" class="link-card">
+                            <img src="images/link6.jpg">
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 左右箭頭 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#linkCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#linkCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- 引用 footer -->
+    <div id="footer-placeholder"></div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // 載入 header
+        fetch('includes/header.html')
+            .then(res => res.text())
+            .then(data => document.getElementById('header-placeholder').innerHTML = data);
+
+        // 載入 footer
+        fetch('includes/footer.html')
+            .then(res => res.text())
+            .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+    </script>
+</body>
+
+</html>
