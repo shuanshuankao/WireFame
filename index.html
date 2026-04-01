@@ -15,7 +15,7 @@
     <style>
         /* 內容最上方官網宣傳圖或產品圖 - 區塊大小 */
         .block.position-relative {
-            max-width: 2500px;
+            max-width: 1450px;
             margin: 50px auto;
             padding: 0;
         }
@@ -61,7 +61,7 @@
             /* 外框 */
             border: 2px solid black;
             padding: 10px 30px;
-            display: block;
+            /* display: inline-block; */
             width: fit-content;
             margin: 0 auto 20px;
         }
@@ -71,7 +71,7 @@
             display: flex;
             flex-direction: column;
             /* 由上到下排列 */
-            max-width: 900px;
+            max-width: 1450px;
             margin: 0 auto;
             border: 2px solid black;
             /* 整個列表外框 */
@@ -354,7 +354,17 @@
         // 載入 header
         fetch('includes/header.html')
             .then(res => res.text())
-            .then(data => document.getElementById('header-placeholder').innerHTML = data);
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+
+                // 等 header 載入完成後，再綁定 dropdown 點擊事件
+                document.querySelectorAll('.dropdown-item').forEach(item => {
+                    item.addEventListener('click', function (e) {
+                        // 直接跳轉到 story.html 對應區塊
+                        window.location.href = this.href;
+                    });
+                });
+            });
 
         // 載入 footer
         fetch('includes/footer.html')
